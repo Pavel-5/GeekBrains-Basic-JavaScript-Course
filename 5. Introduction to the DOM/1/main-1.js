@@ -56,27 +56,6 @@ function createChessboard() {
         else {
             div.classList.add('cage');
             
-            switch(i) {
-                case 11:
-                    div.textContent = 'Л';
-                    break;
-                case 12:
-                    div.textContent = 'К';
-                    break;
-                case 13:
-                    div.textContent = 'С';
-                    break;
-                case 14:
-                    div.textContent = 'Л';
-                    break;
-                case 15:
-                    div.textContent = 'Ф';
-                    break;
-                case 16:
-                    div.textContent = 'К';
-                    break;
-            }
-            
             if((i < 19) || ((i > 30) && (i < 39)) || ((i > 50) && (i < 59)) || ((i > 70) && (i < 79))) {
                 if (i % 2 == 1) div.classList.add('bg--white');
                 else div.classList.add('bg--black');
