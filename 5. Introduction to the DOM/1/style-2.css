@@ -1,0 +1,74 @@
+.body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.chessboard {
+    width: 900px;
+    height: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-areas:
+        ". t ."
+        "l c r"
+        ". b .";
+    outline: 1px solid #000;
+}
+
+.board--base {
+    grid-area: c;
+    display: flex;
+    flex-wrap: wrap;
+    outline: 1px solid #000;
+}
+
+.cage {
+    width: 100px;
+    height: 100px;
+}
+
+.bg--black {
+    background: #aaa;
+}
+
+.bg--white {
+    background: #fff;
+}
+
+.board--left {
+    grid-area: l;
+}
+
+.board--right {
+    grid-area: r;
+}
+
+.column--cage {
+    width: 50px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board--top {
+    grid-area: t;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.board--bottom {
+    grid-area: b;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row--cage {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,48 @@
+.body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.chessboard {
+    width: 900px;
+    height: 900px;
+    margin: 0 auto;
+    border: 1px solid #000;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.angle--cage {
+    width: 50px;
+    height: 50px;
+}
+
+.row--cage {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.column--cage {
+    width: 50px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cage {
+    width: 100px;
+    height: 100px;
+}
+
+.bg--black {
+    background: #aaa;
+}
+
+.bg--white {
+    background: #fff;
+}
