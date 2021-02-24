@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1 class="title">Каталог</h1>
+    <div class="catalog"></div>
+    <div class="tabs">
+      <div class="tab" data-name = "cart">
+        Корзина
+        <div class="tab__arrow"></div>
+      </div>
+      <div class="tab" data-name = "address">
+        Адрес доставки
+        <div class="tab__arrow"></div>
+      </div>
+      <div class="tab" data-name = "comment">
+        Комментарий
+        <div class="tab__arrow"></div>
+      </div>
+    </div>
+    <div class="cart tab--active">
+      <h1 class="title">Корзина</h1>
+      <p class="cart__sum"></p>
+      <div class="cart__products"></div>
+    </div>
+		<div class="address">
+      <h1 class="title">Адрес доставки</h1>
+			<input type="text" class="address__input" placeholder="Напишите адрес доставки">
+			<button class="btn">Отправить</button>
+    </div>
+		<div class="comment">
+      <h1 class="title">Комментарий</h1>
+			<textarea placeholder="Напишите комментарий"></textarea>
+			<button class="btn">Отправить</button>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
