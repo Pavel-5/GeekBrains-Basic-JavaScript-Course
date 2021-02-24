@@ -24,6 +24,30 @@ function createCatalogHTML(prod) {
     let arrow = document.createElement("div");
     arrow.classList.add("slider__arrow");
     arrow.classList.add("slider__arrow--back");
+    arrow.addEventListener("click", () => {
+      let img = arrow.parentNode.querySelector(".slider__active");
+
+      for (let i = 0; i < elem.img.length; i++) {
+        if (img.src.indexOf(elem.img[i]) != -1) {
+          let r = arrow.parentNode.querySelectorAll(".slider__img");
+          console.log(r);
+          r.forEach((node) => {
+            if (i == 0) {
+              if (node.src.indexOf(elem.img[elem.img.length - 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            } else {
+              if (node.src.indexOf(elem.img[i - 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            }
+          });
+          break;
+        }
+      }
+    });
 
     let pag = document.createElement("img");
     pag.src = "img/pagination__left.svg";
@@ -33,16 +57,45 @@ function createCatalogHTML(prod) {
     slider.appendChild(arrow);
     //figure -> slider -> arrow--back end
 
-    let img = document.createElement("img");
-    img.src = elem.img;
-    img.classList.add("slider__img");
+    for (let i = 0; i < elem.img.length; i++) {
+      let img = document.createElement("img");
+      img.src = elem.img[i];
+      img.classList.add("slider__img");
+      if (i == 0) {
+        img.classList.add("slider__active");
+      }
 
-    slider.appendChild(img);
+      slider.appendChild(img);
+    }
 
     //figure -> slider -> arrow--forward
     arrow = document.createElement("div");
     arrow.classList.add("slider__arrow");
     arrow.classList.add("slider__arrow--forward");
+    arrow.addEventListener("click", () => {
+      let img = arrow.parentNode.querySelector(".slider__active");
+
+      for (let i = 0; i < elem.img.length; i++) {
+        if (img.src.indexOf(elem.img[i]) != -1) {
+          let r = arrow.parentNode.querySelectorAll(".slider__img");
+          console.log(r);
+          r.forEach((node) => {
+            if (i == (elem.img.length - 1)) {
+              if (node.src.indexOf(elem.img[0]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            } else {
+              if (node.src.indexOf(elem.img[i + 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            }
+          });
+          break;
+        }
+      }
+    });
 
     pag = document.createElement("img");
     pag.src = "img/pagination__right.svg";
@@ -99,7 +152,7 @@ function createCatalogHTML(prod) {
         cartProducts.push(temp);
       }
 
-			calcSumCart(cartProducts);
+      calcSumCart(cartProducts);
     });
 
     figcaption.appendChild(button);
@@ -128,6 +181,30 @@ function addProdCartHTML(elem) {
   let arrow = document.createElement("div");
   arrow.classList.add("slider__arrow");
   arrow.classList.add("slider__arrow--back");
+	arrow.addEventListener("click", () => {
+		let img = arrow.parentNode.querySelector(".slider__active");
+
+		for (let i = 0; i < elem.img.length; i++) {
+			if (img.src.indexOf(elem.img[i]) != -1) {
+				let r = arrow.parentNode.querySelectorAll(".slider__img");
+				console.log(r);
+				r.forEach((node) => {
+					if (i == 0) {
+						if (node.src.indexOf(elem.img[elem.img.length - 1]) != -1) {
+							img.classList.remove("slider__active");
+							node.classList.add("slider__active");
+						}
+					} else {
+						if (node.src.indexOf(elem.img[i - 1]) != -1) {
+							img.classList.remove("slider__active");
+							node.classList.add("slider__active");
+						}
+					}
+				});
+				break;
+			}
+		}
+	});
 
   let pag = document.createElement("img");
   pag.src = "img/pagination__left.svg";
@@ -137,16 +214,45 @@ function addProdCartHTML(elem) {
   slider.appendChild(arrow);
   //figure -> slider -> arrow--back end
 
-  let img = document.createElement("img");
-  img.src = elem.img;
-  img.classList.add("slider__img");
+  for (let i = 0; i < elem.img.length; i++) {
+		let img = document.createElement("img");
+		img.src = elem.img[i];
+		img.classList.add("slider__img");
+		if (i == 0) {
+			img.classList.add("slider__active");
+		}
 
-  slider.appendChild(img);
+		slider.appendChild(img);
+	}
 
   //figure -> slider -> arrow--forward
   arrow = document.createElement("div");
   arrow.classList.add("slider__arrow");
   arrow.classList.add("slider__arrow--forward");
+	arrow.addEventListener("click", () => {
+		let img = arrow.parentNode.querySelector(".slider__active");
+
+		for (let i = 0; i < elem.img.length; i++) {
+			if (img.src.indexOf(elem.img[i]) != -1) {
+				let r = arrow.parentNode.querySelectorAll(".slider__img");
+				console.log(r);
+				r.forEach((node) => {
+					if (i == (elem.img.length - 1)) {
+						if (node.src.indexOf(elem.img[0]) != -1) {
+							img.classList.remove("slider__active");
+							node.classList.add("slider__active");
+						}
+					} else {
+						if (node.src.indexOf(elem.img[i + 1]) != -1) {
+							img.classList.remove("slider__active");
+							node.classList.add("slider__active");
+						}
+					}
+				});
+				break;
+			}
+		}
+	});
 
   pag = document.createElement("img");
   pag.src = "img/pagination__right.svg";
@@ -185,11 +291,11 @@ function addProdCartHTML(elem) {
   input.addEventListener("change", () => {
     if (input.value == "" || input.value == "0") {
       elem.count = 0;
-			input.value = "0";
+      input.value = "0";
     } else {
       elem.count = input.value;
     }
-		calcSumCart(cartProducts);
+    calcSumCart(cartProducts);
   });
 
   label.appendChild(input);
@@ -212,8 +318,8 @@ function addProdCartHTML(elem) {
     cartProducts = array;
 
     deleteProdCartHTML(temp);
-		
-		calcSumCart(cartProducts);
+
+    calcSumCart(cartProducts);
   });
 
   figcaption.appendChild(button);
@@ -224,7 +330,7 @@ function addProdCartHTML(elem) {
   div.appendChild(figure);
   //figure end
 
-	calcSumCart(cartProducts);
+  calcSumCart(cartProducts);
 }
 
 function deleteProdCartHTML(elem) {
@@ -238,15 +344,25 @@ function calcSumCart(prod) {
     return acс + elem.price * elem.count;
   }, 0); // сумма цен товаров.
 
-	let div = document.querySelector('.cart__sum');
+  let div = document.querySelector(".cart__sum");
 
-	div.textContent = 'Количество позиций: ' + prod.length + '\nИтоговая сумма: ' + sum;
+  div.textContent =
+    "Количество позиций: " + prod.length + "\nИтоговая сумма: " + sum;
 }
 
-let a = new Product("Велосипед", 100, "img/cycle-1.jpg");
-let b = new Product("Самокат", 30, "img/kick_scooter-1.jpg");
-let c = new Product("Ролики", 50, "img/roller_skates-1.jpg");
-let d = new Product("Скейтборд", 15, "img/skateboard-1.jpg");
+let a = new Product("Велосипед", 100, ["img/cycle-1.jpg", "img/cycle-2.jpg"]);
+let b = new Product("Самокат", 30, [
+  "img/kick_scooter-1.jpg",
+  "img/kick_scooter-2.jpg",
+]);
+let c = new Product("Ролики", 50, [
+  "img/roller_skates-1.jpg",
+  "img/roller_skates-2.jpg",
+]);
+let d = new Product("Скейтборд", 15, [
+  "img/skateboard-1.jpg",
+  "img/skateboard-2.jpg",
+]);
 
 let products = [a, b, c, d];
 let cartProducts = [];
