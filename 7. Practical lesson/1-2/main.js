@@ -1,0 +1,408 @@
+"use strict";
+
+class Product {
+  constructor(name, price, img, count = 0) {
+    this.name = name;
+    this.price = price;
+    this.img = img;
+    this.count = count;
+  }
+}
+
+function createCatalogHTML(prod) {
+  let div = document.querySelector(".catalog");
+  for (let elem of prod) {
+    //figure
+    let figure = document.createElement("figure");
+    figure.classList.add("product");
+		figure.setAttribute("tabindex", "0");
+
+    //figure -> slider
+    let slider = document.createElement("div");
+    slider.classList.add("product__slider");
+
+    //figure -> slider -> arrow--back
+    let arrow = document.createElement("div");
+    arrow.classList.add("slider__arrow");
+    arrow.classList.add("slider__arrow--back");
+    arrow.addEventListener("click", () => {
+      let img = arrow.parentNode.querySelector(".slider__active");
+
+      for (let i = 0; i < elem.img.length; i++) {
+        if (img.src.indexOf(elem.img[i]) != -1) {
+          let r = arrow.parentNode.querySelectorAll(".slider__img");
+          console.log(r);
+          r.forEach((node) => {
+            if (i == 0) {
+              if (node.src.indexOf(elem.img[elem.img.length - 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            } else {
+              if (node.src.indexOf(elem.img[i - 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            }
+          });
+          break;
+        }
+      }
+    });
+
+    let pag = document.createElement("img");
+    pag.src = "img/pagination__left.svg";
+
+    arrow.appendChild(pag);
+
+    slider.appendChild(arrow);
+    //figure -> slider -> arrow--back end
+
+    for (let i = 0; i < elem.img.length; i++) {
+      let img = document.createElement("img");
+      img.src = elem.img[i];
+      img.classList.add("slider__img");
+      if (i == 0) {
+        img.classList.add("slider__active");
+      }
+
+      slider.appendChild(img);
+    }
+
+    //figure -> slider -> arrow--forward
+    arrow = document.createElement("div");
+    arrow.classList.add("slider__arrow");
+    arrow.classList.add("slider__arrow--forward");
+    arrow.addEventListener("click", () => {
+      let img = arrow.parentNode.querySelector(".slider__active");
+
+      for (let i = 0; i < elem.img.length; i++) {
+        if (img.src.indexOf(elem.img[i]) != -1) {
+          let r = arrow.parentNode.querySelectorAll(".slider__img");
+          console.log(r);
+          r.forEach((node) => {
+            if (i == elem.img.length - 1) {
+              if (node.src.indexOf(elem.img[0]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            } else {
+              if (node.src.indexOf(elem.img[i + 1]) != -1) {
+                img.classList.remove("slider__active");
+                node.classList.add("slider__active");
+              }
+            }
+          });
+          break;
+        }
+      }
+    });
+
+    pag = document.createElement("img");
+    pag.src = "img/pagination__right.svg";
+
+    arrow.appendChild(pag);
+
+    slider.appendChild(arrow);
+    //figure -> slider -> arrow--forward end
+
+    figure.appendChild(slider);
+    //figure -> slider end
+
+    //figure -> figcaption
+    let figcaption = document.createElement("figcaption");
+    figcaption.classList.add("product__description");
+
+    let h2 = document.createElement("h2");
+    h2.textContent = elem.name;
+    h2.classList.add("description__name");
+
+    figcaption.appendChild(h2);
+
+    let p = document.createElement("p");
+    p.textContent = elem.price;
+    p.classList.add("description__price");
+
+    figcaption.appendChild(p);
+
+    let button = document.createElement("button");
+    button.classList.add("description__buy");
+    button.textContent = "Купить";
+    button.addEventListener("click", () => {
+      let temp;
+      for (let i of products) {
+        if (i.name == h2.textContent) {
+          temp = i;
+          break;
+        }
+      }
+
+      let flag = true;
+      for (let i of cartProducts) {
+        if (temp.name == i.name) {
+          temp.count++;
+          document
+            .getElementById(temp.name)
+            .querySelector(".description__quantity").value = temp.count;
+          flag = false;
+        }
+      }
+
+      if (flag) {
+        addProdCartHTML(temp);
+        cartProducts.push(temp);
+      }
+
+      calcSumCart(cartProducts);
+    });
+
+    figcaption.appendChild(button);
+
+    figure.appendChild(figcaption);
+    //figure -> figcaption end
+
+    div.appendChild(figure);
+    //figure end
+  }
+}
+
+function addProdCartHTML(elem) {
+  let div = document.querySelector(".cart__products");
+
+  //figure
+  let figure = document.createElement("figure");
+  figure.classList.add("product");
+  figure.id = elem.name;
+	figure.setAttribute("tabindex", "0");
+
+  //figure -> slider
+  let slider = document.createElement("div");
+  slider.classList.add("product__slider");
+
+  //figure -> slider -> arrow--back
+  let arrow = document.createElement("div");
+  arrow.classList.add("slider__arrow");
+  arrow.classList.add("slider__arrow--back");
+  arrow.addEventListener("click", () => {
+    let img = arrow.parentNode.querySelector(".slider__active");
+
+    for (let i = 0; i < elem.img.length; i++) {
+      if (img.src.indexOf(elem.img[i]) != -1) {
+        let r = arrow.parentNode.querySelectorAll(".slider__img");
+        console.log(r);
+        r.forEach((node) => {
+          if (i == 0) {
+            if (node.src.indexOf(elem.img[elem.img.length - 1]) != -1) {
+              img.classList.remove("slider__active");
+              node.classList.add("slider__active");
+            }
+          } else {
+            if (node.src.indexOf(elem.img[i - 1]) != -1) {
+              img.classList.remove("slider__active");
+              node.classList.add("slider__active");
+            }
+          }
+        });
+        break;
+      }
+    }
+  });
+
+  let pag = document.createElement("img");
+  pag.src = "img/pagination__left.svg";
+
+  arrow.appendChild(pag);
+
+  slider.appendChild(arrow);
+  //figure -> slider -> arrow--back end
+
+  for (let i = 0; i < elem.img.length; i++) {
+    let img = document.createElement("img");
+    img.src = elem.img[i];
+    img.classList.add("slider__img");
+    if (i == 0) {
+      img.classList.add("slider__active");
+    }
+
+    slider.appendChild(img);
+  }
+
+  //figure -> slider -> arrow--forward
+  arrow = document.createElement("div");
+  arrow.classList.add("slider__arrow");
+  arrow.classList.add("slider__arrow--forward");
+  arrow.addEventListener("click", () => {
+    let img = arrow.parentNode.querySelector(".slider__active");
+
+    for (let i = 0; i < elem.img.length; i++) {
+      if (img.src.indexOf(elem.img[i]) != -1) {
+        let r = arrow.parentNode.querySelectorAll(".slider__img");
+        console.log(r);
+        r.forEach((node) => {
+          if (i == elem.img.length - 1) {
+            if (node.src.indexOf(elem.img[0]) != -1) {
+              img.classList.remove("slider__active");
+              node.classList.add("slider__active");
+            }
+          } else {
+            if (node.src.indexOf(elem.img[i + 1]) != -1) {
+              img.classList.remove("slider__active");
+              node.classList.add("slider__active");
+            }
+          }
+        });
+        break;
+      }
+    }
+  });
+
+  pag = document.createElement("img");
+  pag.src = "img/pagination__right.svg";
+
+  arrow.appendChild(pag);
+
+  slider.appendChild(arrow);
+  //figure -> slider -> arrow--forward end
+
+  figure.appendChild(slider);
+  //figure -> slider end
+
+  //figure -> figcaption
+  let figcaption = document.createElement("figcaption");
+  figcaption.classList.add("product__description");
+
+  let h2 = document.createElement("h2");
+  h2.textContent = elem.name;
+  h2.classList.add("description__name");
+
+  figcaption.appendChild(h2);
+
+  let p = document.createElement("p");
+  p.textContent = elem.price;
+  p.classList.add("description__price");
+
+  figcaption.appendChild(p);
+
+  //figure -> figcaption -> label
+  let label = document.createElement("label");
+  label.textContent = "Количество: ";
+
+  let input = document.createElement("input");
+  input.classList.add("description__quantity");
+  input.value = ++elem.count;
+  input.addEventListener("change", () => {
+    if (input.value == "" || input.value == "0") {
+      elem.count = 0;
+      input.value = "0";
+    } else {
+      elem.count = input.value;
+    }
+    calcSumCart(cartProducts);
+  });
+
+  label.appendChild(input);
+  figcaption.appendChild(label);
+  //figure -> figcaption -> label end
+
+  let button = document.createElement("button");
+  button.classList.add("description__delete");
+  button.textContent = "Удалить";
+  button.addEventListener("click", () => {
+    let temp;
+    let array = [];
+    for (let i of cartProducts) {
+      if (i.name != h2.textContent) {
+        array.push(i);
+      } else {
+        temp = i;
+      }
+    }
+    cartProducts = array;
+
+    deleteProdCartHTML(temp);
+
+    calcSumCart(cartProducts);
+  });
+
+  figcaption.appendChild(button);
+
+  figure.appendChild(figcaption);
+  //figure -> figcaption end
+
+  div.appendChild(figure);
+  //figure end
+
+  calcSumCart(cartProducts);
+}
+
+function deleteProdCartHTML(elem) {
+  elem.count = 0;
+  let el = document.getElementById(elem.name);
+  el.parentNode.removeChild(el);
+}
+
+function calcSumCart(prod) {
+  let sum = prod.reduce((acс, elem) => {
+    return acс + elem.price * elem.count;
+  }, 0); // сумма цен товаров.
+
+  let div = document.querySelector(".cart__sum");
+
+  div.textContent =
+    "Количество позиций: " + prod.length + "\nИтоговая сумма: " + sum;
+}
+
+let a = new Product("Велосипед", 100, ["img/cycle-1.jpg", "img/cycle-2.jpg"]);
+let b = new Product("Самокат", 30, [
+  "img/kick_scooter-1.jpg",
+  "img/kick_scooter-2.jpg",
+]);
+let c = new Product("Ролики", 50, [
+  "img/roller_skates-1.jpg",
+  "img/roller_skates-2.jpg",
+]);
+let d = new Product("Скейтборд", 15, [
+  "img/skateboard-1.jpg",
+  "img/skateboard-2.jpg",
+]);
+
+let products = [a, b, c, d];
+let cartProducts = [];
+
+createCatalogHTML(products);
+
+calcSumCart(cartProducts);
+
+let tabs = document.querySelector(".tabs");
+let currentActiveTab = document.querySelector(".tab--active");
+
+tabs.addEventListener("click", (e) => {
+  if (e.target.classList.contains("tab")) {
+    if (currentActiveTab != e.target) {
+      currentActiveTab.classList.remove("tab--active");
+      currentActiveTab = document.querySelector(
+        "." + e.target.getAttribute("data-name")
+      );
+      currentActiveTab.classList.add("tab--active");
+    }
+  }
+  if (e.target.classList.contains("tab__arrow")) {
+    let node = e.target.parentNode;
+    if (currentActiveTab != node) {
+      currentActiveTab.classList.remove("tab--active");
+      currentActiveTab = document.querySelector(
+        "." + node.getAttribute("data-name")
+      );
+      currentActiveTab.classList.add("tab--active");
+    }
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+	if(e.key == "ArrowRight") {
+		document.activeElement.querySelector(".slider__arrow--forward").click();
+	}
+	if(e.key == "ArrowLeft") {
+		document.activeElement.querySelector(".slider__arrow--back").click();
+	}
+});
