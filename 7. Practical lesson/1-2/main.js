@@ -15,6 +15,7 @@ function createCatalogHTML(prod) {
     //figure
     let figure = document.createElement("figure");
     figure.classList.add("product");
+		figure.setAttribute("tabindex", "0");
 
     //figure -> slider
     let slider = document.createElement("div");
@@ -172,6 +173,7 @@ function addProdCartHTML(elem) {
   let figure = document.createElement("figure");
   figure.classList.add("product");
   figure.id = elem.name;
+	figure.setAttribute("tabindex", "0");
 
   //figure -> slider
   let slider = document.createElement("div");
@@ -371,23 +373,36 @@ createCatalogHTML(products);
 
 calcSumCart(cartProducts);
 
-let tabs = document.querySelector('.tabs');
-let currentActiveTab = document.querySelector('.tab--active');
+let tabs = document.querySelector(".tabs");
+let currentActiveTab = document.querySelector(".tab--active");
 
-tabs.addEventListener('click', (e) => {
-	if(e.target.classList.contains('tab')) {
-		if(currentActiveTab != e.target) {
-			currentActiveTab.classList.remove('tab--active');
-			currentActiveTab = document.querySelector('.' + e.target.getAttribute('data-name'));
-			currentActiveTab.classList.add('tab--active');
-		}
+tabs.addEventListener("click", (e) => {
+  if (e.target.classList.contains("tab")) {
+    if (currentActiveTab != e.target) {
+      currentActiveTab.classList.remove("tab--active");
+      currentActiveTab = document.querySelector(
+        "." + e.target.getAttribute("data-name")
+      );
+      currentActiveTab.classList.add("tab--active");
+    }
+  }
+  if (e.target.classList.contains("tab__arrow")) {
+    let node = e.target.parentNode;
+    if (currentActiveTab != node) {
+      currentActiveTab.classList.remove("tab--active");
+      currentActiveTab = document.querySelector(
+        "." + node.getAttribute("data-name")
+      );
+      currentActiveTab.classList.add("tab--active");
+    }
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+	if(e.key == "ArrowRight") {
+		document.activeElement.querySelector(".slider__arrow--forward").click();
 	}
-	if(e.target.classList.contains('tab__arrow')) {
-		let node = e.target.parentNode;
-		if(currentActiveTab != node) {
-			currentActiveTab.classList.remove('tab--active');
-			currentActiveTab = document.querySelector('.' + node.getAttribute('data-name'));
-			currentActiveTab.classList.add('tab--active');
-		}
+	if(e.key == "ArrowLeft") {
+		document.activeElement.querySelector(".slider__arrow--back").click();
 	}
 });
